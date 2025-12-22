@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Completo - Estructura de Datos y Algoritmos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header y navegación */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Contenido principal */
+        main {
+            padding-bottom: 3rem;
+        }
+
+        .session-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .session-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .session-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .session-header h3 {
+            font-size: 1.4rem;
+        }
+
+        .session-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .session-content {
+            padding: 1.5rem;
+        }
+
+        .session-date {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-date i {
+            font-size: 1.1rem;
+        }
+
+        .session-topics {
+            margin-bottom: 1.5rem;
+        }
+
+        .session-topics h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .session-topics h4 i {
+            color: var(--secondary-color);
+        }
+
+        .topics-list {
+            list-style-type: none;
+        }
+
+        .topics-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topics-list li:last-child {
+            border-bottom: none;
+        }
+
+        .topics-list i {
+            color: var(--success-color);
+        }
+
+        .research-section {
+            background-color: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .research-section h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .footer-logo span {
+            color: var(--secondary-color);
+        }
+
+        .footer-quote {
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #ecf0f1;
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .session-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Estilos adicionales */
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .interactive-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 5px;
+        }
+
+        .interactive-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con navegación -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-project-diagram"></i>
+                <h1>Estructura de <span>Datos</span></h1>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#sesiones">Sesiones</a></li>
+                    <li><a href="#sesion1">Sesión 1</a></li>
+                    <li><a href="#sesion2">Sesión 2</a></li>
+                    <li><a href="#sesion3">Sesión 3</a></li>
+                    <li><a href="#sesion4">Sesión 4</a></li>
+                    <li><a href="#sesion5">Sesión 5</a></li>
+                    <li><a href="#sesion6">Sesión 6</a></li>
+                    <li><a href="#sesion7">Sesión 7</a></li>
+                    <li><a href="#sesion8">Sesión 8</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h2>Curso Completo: Estructura de Datos y Algoritmos</h2>
+            <p>Una experiencia interactiva que recorre las 8 sesiones del curso, desde fundamentos hasta aplicaciones avanzadas. Explora contenidos teóricos, investigaciones grupales y aplicaciones prácticas.</p>
+            <a href="#sesiones" class="cta-button">Explorar Sesiones</a>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <main class="container" id="sesiones">
+        <h2 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">Sesiones del Curso</h2>
+        
+        <div class="session-container">
+            <!-- Sesión 1 -->
+            <div class="session-card" id="sesion1">
+                <div class="session-header">
+                    <h3>Sesión 1: Fundamentos de Estructura de Datos</h3>
+                    <div class="session-number">1</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 02 de Noviembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Conceptos básicos: dato, información, estructura de datos</li>
+                            <li><i class="fas fa-check-circle"></i> Clasificación de estructuras de datos</li>
+                            <li><i class="fas fa-check-circle"></i> Tipos abstractos de datos (TAD)</li>
+                            <li><i class="fas fa-check-circle"></i> Introducción a la complejidad algorítmica</li>
+                            <li><i class="fas fa-check-circle"></i> Notación O grande (análisis asintótico)</li>
+                            <li><i class="fas fa-check-circle"></i> Importancia de las estructuras de datos en la eficiencia</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Aprendizajes Clave</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-arrow-right"></i> Diferenciar entre dato e información</li>
+                            <li><i class="fas fa-arrow-right"></i> Comprender la importancia de seleccionar la estructura adecuada</li>
+                            <li><i class="fas fa-arrow-right"></i> Analizar la eficiencia de algoritmos usando notación O grande</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-block">
+                        // Ejemplo de análisis de complejidad<br>
+                        function buscarLineal(arr, valor) {<br>
+                        &nbsp;&nbsp;for(let i = 0; i < arr.length; i++) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if(arr[i] === valor) return i;<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return -1;<br>
+                        }<br>
+                        // Complejidad: O(n) - Lineal
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 2 -->
+            <div class="session-card" id="sesion2">
+                <div class="session-header">
+                    <h3>Sesión 2: Estructuras Lineales y No Lineales</h3>
+                    <div class="session-number">2</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 09 de Noviembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Estructuras lineales: Pilas (LIFO)</li>
+                            <li><i class="fas fa-check-circle"></i> Estructuras lineales: Colas (FIFO)</li>
+                            <li><i class="fas fa-check-circle"></i> Estructuras lineales: Listas enlazadas</li>
+                            <li><i class="fas fa-check-circle"></i> Estructuras no lineales: Árboles</li>
+                            <li><i class="fas fa-check-circle"></i> Estructuras no lineales: Grafos</li>
+                            <li><i class="fas fa-check-circle"></i> Diferencias entre estructuras lineales y no lineales</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="research-section">
+                        <h4><i class="fas fa-users"></i> Investigación Grupal No. 1</h4>
+                        <p><strong>Tema:</strong> Estructuras Lineales (Pilas, Colas, Listas) y No Lineales (Árboles, Grafos)</p>
+                        <p><strong>Objetivo:</strong> Investigar y presentar sobre las diferentes estructuras de datos, incluyendo sus implementaciones, operaciones y aplicaciones.</p>
+                        <p><strong>Resultados:</strong> Presentaciones sobre colas estáticas/dinámicas y árboles, con análisis comparativo y casos de uso reales.</p>
+                        <button class="interactive-btn" onclick="mostrarEjemplo('cola')">Ver ejemplo de Cola</button>
+                        <button class="interactive-btn" onclick="mostrarEjemplo('arbol')">Ver ejemplo de Árbol</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 3 -->
+            <div class="session-card" id="sesion3">
+                <div class="session-header">
+                    <h3>Sesión 3: Aplicaciones (Trabajo Final)</h3>
+                    <div class="session-number">3</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 21 de Diciembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Definición del proyecto final integrador</li>
+                            <li><i class="fas fa-check-circle"></i> Aplicación de estructuras de datos en problemas reales</li>
+                            <li><i class="fas fa-check-circle"></i> Diseño de soluciones algorítmicas</li>
+                            <li><i class="fas fa-check-circle"></i> Selección de estructuras adecuadas para casos específicos</li>
+                            <li><i class="fas fa-check-circle"></i> Planificación y metodología para el desarrollo del proyecto</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Temas de Investigación para Trabajo Final</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-database"></i> Algoritmos para Big Data y Ciencia de Datos</li>
+                            <li><i class="fas fa-brain"></i> Estructuras y Algoritmos en IA y Machine Learning</li>
+                            <li><i class="fas fa-cloud"></i> Computación en la Nube y IoT</li>
+                            <li><i class="fas fa-lock"></i> Criptografía y Seguridad</li>
+                            <li><i class="fas fa-sort-amount-down"></i> Algoritmos de Búsqueda y Ordenamiento Avanzados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 4 -->
+            <div class="session-card" id="sesion4">
+                <div class="session-header">
+                    <h3>Sesión 4: Estructuras Lineales - Listas y Aplicaciones</h3>
+                    <div class="session-number">4</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 23 al 30 de Noviembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Listas simplemente enlazadas</li>
+                            <li><i class="fas fa-check-circle"></i> Listas doblemente enlazadas</li>
+                            <li><i class="fas fa-check-circle"></i> Listas circulares</li>
+                            <li><i class="fas fa-check-circle"></i> Operaciones básicas: inserción, eliminación, búsqueda</li>
+                            <li><i class="fas fa-check-circle"></i> Aplicaciones en sistemas reales</li>
+                            <li><i class="fas fa-check-circle"></i> Implementación en C++/Java/Python</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-block">
+                        // Ejemplo de nodo para lista enlazada<br>
+                        class Nodo {<br>
+                        &nbsp;&nbsp;constructor(dato) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;this.dato = dato;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;this.siguiente = null;<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br><br>
+                        
+                        // Ejemplo de inserción al inicio<br>
+                        function insertarAlInicio(lista, dato) {<br>
+                        &nbsp;&nbsp;let nuevoNodo = new Nodo(dato);<br>
+                        &nbsp;&nbsp;nuevoNodo.siguiente = lista.cabeza;<br>
+                        &nbsp;&nbsp;lista.cabeza = nuevoNodo;<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 5 -->
+            <div class="session-card" id="sesion5">
+                <div class="session-header">
+                    <h3>Sesión 5: Algoritmos, Pseudocódigos y Diagramas de Flujo</h3>
+                    <div class="session-number">5</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 30 de Noviembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Diseño algorítmico</li>
+                            <li><i class="fas fa-check-circle"></i> Pseudocódigo: definición y estructura</li>
+                            <li><i class="fas fa-check-circle"></i> Diagramas de flujo: símbolos y convenciones</li>
+                            <li><i class="fas fa-check-circle"></i> Metodología para resolución de problemas</li>
+                            <li><i class="fas fa-check-circle"></i> Conversión de algoritmos a código</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="research-section">
+                        <h4><i class="fas fa-users"></i> Investigación Grupal No. 2</h4>
+                        <p><strong>Tema:</strong> Algoritmos, Pseudocódigos, Diagramas de Flujo y Programación Web</p>
+                        <p><strong>Objetivo:</strong> Investigar herramientas de diseño algorítmico y su aplicación en desarrollo web.</p>
+                        <p><strong>Resultados:</strong> Presentación ejecutiva integrando conceptos algorítmicos con aplicaciones web, incluyendo ejemplos de HTML, CSS, JavaScript y JSON.</p>
+                        <button class="interactive-btn" onclick="mostrarEjemplo('pseudocodigo')">Ver Pseudocódigo</button>
+                        <button class="interactive-btn" onclick="mostrarEjemplo('json')">Ver Ejemplo JSON</button>
+                    </div>
+                    
+                    <div class="code-block">
+                        // Ejemplo de pseudocódigo para encontrar máximo<br>
+                        ALGORITMO EncontrarMaximo<br>
+                        &nbsp;&nbsp;ENTRADAS: numeros (arreglo)<br>
+                        &nbsp;&nbsp;SALIDAS: maximo<br>
+                        <br>
+                        &nbsp;&nbsp;maximo ← numeros[0]<br>
+                        &nbsp;&nbsp;PARA i ← 1 HASTA LONGITUD(numeros) HACER<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SI numeros[i] > maximo ENTONCES<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximo ← numeros[i]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;FIN SI<br>
+                        &nbsp;&nbsp;FIN PARA<br>
+                        &nbsp;&nbsp;RETORNAR maximo<br>
+                        FIN ALGORITMO
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 6 -->
+            <div class="session-card" id="sesion6">
+                <div class="session-header">
+                    <h3>Sesión 6: Examen Parcial - Exposiciones</h3>
+                    <div class="session-number">6</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 7 de Diciembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Actividades Realizadas</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Examen teórico-práctico de los temas vistos</li>
+                            <li><i class="fas fa-check-circle"></i> Exposiciones grupales sobre aplicaciones de estructuras de datos</li>
+                            <li><i class="fas fa-check-circle"></i> Presentación de investigaciones grupales</li>
+                            <li><i class="fas fa-check-circle"></i> Retroalimentación entre estudiantes y profesor</li>
+                            <li><i class="fas fa-check-circle"></i> Evaluación de aprendizajes y competencias</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Competencias Evaluadas</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-arrow-right"></i> Comprensión de conceptos teóricos</li>
+                            <li><i class="fas fa-arrow-right"></i> Capacidad para implementar estructuras de datos</li>
+                            <li><i class="fas fa-arrow-right"></i> Habilidad para seleccionar estructuras apropiadas</li>
+                            <li><i class="fas fa-arrow-right"></i> Comunicación efectiva de conceptos técnicos</li>
+                            <li><i class="fas fa-arrow-right"></i> Trabajo colaborativo en equipo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 7 -->
+            <div class="session-card" id="sesion7">
+                <div class="session-header">
+                    <h3>Sesión 7: Métodos de Ordenamiento y Búsqueda</h3>
+                    <div class="session-number">7</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 14 de Diciembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Temas Cubiertos</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Algoritmos de ordenamiento: Burbuja, Selección, Inserción</li>
+                            <li><i class="fas fa-check-circle"></i> Algoritmos de ordenamiento: Mergesort, Quicksort, Heapsort</li>
+                            <li><i class="fas fa-check-circle"></i> Algoritmos de búsqueda: Secuencial, Binaria</li>
+                            <li><i class="fas fa-check-circle"></i> Búsqueda en árboles: BST, AVL</li>
+                            <li><i class="fas fa-check-circle"></i> Análisis de eficiencia (complejidad temporal y espacial)</li>
+                            <li><i class="fas fa-check-circle"></i> Comparativa entre diferentes algoritmos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-block">
+                        // Ejemplo de ordenamiento por inserción<br>
+                        function ordenamientoInsercion(arr) {<br>
+                        &nbsp;&nbsp;for(let i = 1; i < arr.length; i++) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;let clave = arr[i];<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;let j = i - 1;<br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;while(j >= 0 && arr[j] > clave) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[j + 1] = arr[j];<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j = j - 1;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;arr[j + 1] = clave;<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return arr;<br>
+                        }<br>
+                        // Complejidad: O(n²) en peor caso, O(n) en mejor caso
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sesión 8 -->
+            <div class="session-card" id="sesion8">
+                <div class="session-header">
+                    <h3>Sesión 8: Integración y Cierre del Curso</h3>
+                    <div class="session-number">8</div>
+                </div>
+                <div class="session-content">
+                    <div class="session-date">
+                        <i class="far fa-calendar-alt"></i> 21 de Diciembre, 2025
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-graduation-cap"></i> Actividades Realizadas</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check-circle"></i> Presentación de trabajos finales</li>
+                            <li><i class="fas fa-check-circle"></i> Integración de conocimientos del curso completo</li>
+                            <li><i class="fas fa-check-circle"></i> Revisión de conceptos clave</li>
+                            <li><i class="fas fa-check-circle"></i> Evaluación final y retroalimentación</li>
+                            <li><i class="fas fa-check-circle"></i> Perspectivas futuras en estructuras de datos</li>
+                            <li><i class="fas fa-check-circle"></i> Entrega de portafolios digitales</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="session-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Integración de Aprendizajes</h4>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-arrow-right"></i> Conexión entre teoría (sesiones 1-2) y práctica (sesiones 3-7)</li>
+                            <li><i class="fas fa-arrow-right"></i> Aplicación de estructuras de datos en proyectos reales</li>
+                            <li><i class="fas fa-arrow-right"></i> Desarrollo de pensamiento algorítmico</li>
+                            <li><i class="fas fa-arrow-right"></i> Habilidades de diseño y análisis de algoritmos</li>
+                            <li><i class="fas fa-arrow-right"></i> Preparación para cursos avanzados y aplicaciones profesionales</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="research-section">
+                        <h4><i class="fas fa-trophy"></i> Logros del Curso</h4>
+                        <p>Al completar las 8 sesiones, los estudiantes han desarrollado competencias en:</p>
+                        <ul class="topics-list">
+                            <li><i class="fas fa-check"></i> Diseño e implementación de estructuras de datos</li>
+                            <li><i class="fas fa-check"></i> Análisis de complejidad algorítmica</li>
+                            <li><i class="fas fa-check"></i> Selección de estructuras adecuadas para problemas específicos</li>
+                            <li><i class="fas fa-check"></i> Implementación de algoritmos de ordenamiento y búsqueda</li>
+                            <li><i class="fas fa-check"></i> Trabajo colaborativo en investigaciones grupales</li>
+                            <li><i class="fas fa-check"></i> Comunicación efectiva de conceptos técnicos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-project-diagram"></i> Estructura de <span>Datos</span>
+            </div>
+            <p class="footer-quote">"En todo ser humano hay grandeza. Este curso ha sido diseñado para ayudarte a descubrir y desarrollar la tuya a través del estudio de las estructuras de datos y algoritmos."</p>
+            <div class="copyright">
+                <p>Curso: Estructura de Datos y Algoritmos | Profesor: Nodier A. Gutiérrez E.</p>
+                <p>Estudiante: Adán Candanedo | Universidad Tecnológica Otelma | 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menú móvil
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Función para mostrar ejemplos interactivos
+        function mostrarEjemplo(tipo) {
+            let mensaje = "";
+            
+            switch(tipo) {
+                case 'cola':
+                    mensaje = "Cola (FIFO): Primero en Entrar, Primero en Salir\n\nEjemplo: Fila en un banco\n- Cliente 1 llega -> se encola\n- Cliente 2 llega -> se encola\n- Se atiende -> sale Cliente 1 (el primero en llegar)";
+                    break;
+                case 'arbol':
+                    mensaje = "Árbol Binario:\n\n      Raíz (10)\n      /    \\\n    (5)    (15)\n   /  \\    /  \\\n (2) (7) (12) (20)\n\nRecorrido Inorden: 2, 5, 7, 10, 12, 15, 20 (ordenado)";
+                    break;
+                case 'pseudocodigo':
+                    mensaje = "Pseudocódigo para calcular promedio:\n\nALGORITMO CalcularPromedio\n  ENTRADAS: notas (arreglo)\n  SALIDAS: promedio\n\n  suma ← 0\n  PARA i ← 0 HASTA LONGITUD(notas)-1 HACER\n    suma ← suma + notas[i]\n  FIN PARA\n  promedio ← suma / LONGITUD(notas)\n  RETORNAR promedio\nFIN ALGORITMO";
+                    break;
+                case 'json':
+                    mensaje = 'Ejemplo JSON para estudiante:\n\n{\n  "nombre": "Ana García",\n  "edad": 22,\n  "cursos": [\n    "Estructuras de Datos",\n    "Programación Web",\n    "Bases de Datos"\n  ],\n  "activo": true,\n  "promedio": 8.5\n}';
+                    break;
+                default:
+                    mensaje = "Ejemplo no disponible";
+            }
+            
+            alert(mensaje);
+        }
+        
+        // Smooth scrolling para los enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Efecto de scroll para header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if(window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+  </html>
